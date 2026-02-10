@@ -21,22 +21,30 @@ export function mergeSort(array) {
     smallerArray = rightHalf;
     largerArray = leftHalf;
   }
+  console.log(`smaller Array = ${smallerArray} larger Array = ${largerArray}`)
 
   if (largerArray.length === 1) {
     return largerArray[0] <= smallerArray[0]
       ? [largerArray[0], smallerArray[0]]
-      : [smallerArray[0], [largerArray[0]]];
+      : [smallerArray[0], largerArray[0]];
   } else if (largerArray.length === 2) {
     let sortedLargerArray = mergeSort(largerArray);
+    console.log(`This is the sorted larger array ${sortedLargerArray}`)
     let sortedArray = [];
-    while (sortedLargerArray.length > 0) {
+    while (sortedLargerArray.length > 0 || smallerArray.length > 0) {
       if (smallerArray.length === 0) {
         sortedArray.push(sortedLargerArray.shift());
-      } else {
+      } else if (sortedLargerArray.length === 0){
+        sortedArray.push(smallerArray.shift())
+      }
+      else {
         if (smallerArray[0] <= sortedLargerArray[0]) {
           sortedArray.push(smallerArray.shift());
+          console.log(`This is the sorted Array ${sortedLargerArray}`);
         } else {
           sortedArray.push(sortedLargerArray.shift());
+                    console.log(`This is the sorted Array ${sortedLargerArray}`);
+
         }
       }
     }
@@ -49,4 +57,4 @@ export function mergeSort(array) {
 //   console.log(sortedRightHalf);
 }
 
-console.log(mergeSort([1, 2, 3, 4, 5]))
+console.log(mergeSort([6, 10, 5]))

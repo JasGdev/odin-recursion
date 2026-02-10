@@ -11,50 +11,39 @@ export function mergeSort(array) {
   const leftHalf = array.slice(0, midpointIndex);
   const rightHalf = array.slice(midpointIndex);
 
-//   merging Logic
+  //   merging Logic
   let smallerArray = [];
   let largerArray = [];
-  if (leftHalf.length === 1) {
+  if (leftHalf.length < rightHalf.length) {
     smallerArray = leftHalf;
     largerArray = rightHalf;
-  } else if (rightHalf.length === 1) {
+  } else {
     smallerArray = rightHalf;
     largerArray = leftHalf;
   }
-  console.log(`smaller Array = ${smallerArray} larger Array = ${largerArray}`)
+  // console.log(`smaller Array = ${smallerArray} larger Array = ${largerArray}`);
 
   if (largerArray.length === 1) {
     return largerArray[0] <= smallerArray[0]
       ? [largerArray[0], smallerArray[0]]
       : [smallerArray[0], largerArray[0]];
-  } else if (largerArray.length === 2) {
-    let sortedLargerArray = mergeSort(largerArray);
-    console.log(`This is the sorted larger array ${sortedLargerArray}`)
+  } else {
     let sortedArray = [];
-    while (sortedLargerArray.length > 0 || smallerArray.length > 0) {
-      if (smallerArray.length === 0) {
+    let sortedLargerArray = mergeSort(largerArray);
+    let sortedSmallerArray = mergeSort(smallerArray);
+    while (sortedLargerArray.length > 0 || sortedSmallerArray.length > 0) {
+      if (sortedSmallerArray.length === 0) {
         sortedArray.push(sortedLargerArray.shift());
-      } else if (sortedLargerArray.length === 0){
-        sortedArray.push(smallerArray.shift())
-      }
-      else {
-        if (smallerArray[0] <= sortedLargerArray[0]) {
-          sortedArray.push(smallerArray.shift());
-          console.log(`This is the sorted Array ${sortedLargerArray}`);
+      } else if (sortedLargerArray.length === 0) {
+        sortedArray.push(sortedSmallerArray.shift());
+      } else {
+        if (sortedSmallerArray[0] <= sortedLargerArray[0]) {
+          sortedArray.push(sortedSmallerArray.shift());
         } else {
           sortedArray.push(sortedLargerArray.shift());
-                    console.log(`This is the sorted Array ${sortedLargerArray}`);
-
         }
       }
     }
-    return sortedArray
+    return sortedArray;
   }
-
-  // when both left and right are single array merge them and sort by putting smaller value first and then the larger value
-  // when merging 2 arrays of length greater than 1 compare the first index of both and insert smaller and continue
-//   console.log(sortedLeftHalf);
-//   console.log(sortedRightHalf);
 }
-
-console.log(mergeSort([6, 10, 5]))

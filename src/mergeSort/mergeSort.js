@@ -31,3 +31,4 @@ export function mergeSort(array) {
   }
   return sortedArray;
 }
+
